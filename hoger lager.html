@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Higher or Lower Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        #result {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Higher or Lower Game</h1>
+    <p>Guess if the next number will be higher or lower than the current number.</p>
+    <p>Current Number: <span id="currentNumber"></span></p>
+    <p id="result"></p>
+    <button id="higherButton">Higher</button>
+    <button id="lowerButton">Lower</button>
+
+    <script>
+        let currentNumber = 0;
+        let nextNumber = 0;
+        let score = 0;
+
+        function generateRandomNumber() {
+            return Math.floor(Math.random() * 100) + 1;
+        }
+
+        function startGame() {
+            currentNumber = generateRandomNumber();
+            document.getElementById("currentNumber").textContent = currentNumber;
+        }
+
+        function checkGuess(isHigher) {
+            nextNumber = generateRandomNumber();
+            document.getElementById("currentNumber").textContent = nextNumber;
+
+            if ((isHigher && nextNumber > currentNumber) || (!isHigher && nextNumber < currentNumber)) {
+                score++;
+                document.getElementById("result").textContent = "Correct! Your Score: " + score;
+            } else {
+                document.getElementById("result").textContent = "Incorrect! Game Over. Final Score: " + score;
+                document.getElementById("higherButton").disabled = true;
+                document.getElementById("lowerButton").disabled = true;
+            }
+
+            currentNumber = nextNumber;
+        }
+
+        document.getElementById("higherButton").addEventListener("click", () => checkGuess(true));
+        document.getElementById("lowerButton").addEventListener("click", () => checkGuess(false));
+
+        startGame();
+    </script>
+</body>
+</html>
